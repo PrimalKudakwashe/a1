@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="A minimal static site built with HTML and CSS — easy to edit and deploy.">
+  <title>My Simple Site</title>
+
+  <link rel="icon" href="/favicon.ico">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <nav aria-label="Main navigation" class="container">
+    <ul class="nav" id="siteNav">
+      <li><a href="#home" data-target="home">Home</a></li>
+      <li><a href="#about" data-target="about">About</a></li>
+      <li><a href="#projects" data-target="projects">Projects</a></li>
+      <li><a href="#contact" data-target="contact">Contact</a></li>
+    </ul>
+
+    <!-- Dark mode toggle -->
+    <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">
+      🌙
+    </button>
+  </nav>
+
+  <header id="home" class="hero container">
+    <h1>Welcome to my simple website</h1>
+    <p class="tagline">A minimal static site — ready to publish. Built with accessibility, responsiveness, and simple interactivity in mind.</p>
+    <p><a class="cta" href="#about">Learn more</a></p>
+  </header>
+
+  <main id="main" class="container">
+    <section id="about">
+      <h2>About</h2>
+      <p>This page was built with plain HTML, CSS, and a tiny JavaScript enhancement file. Edit the content, add pages, and deploy to GitHub Pages, Netlify, or Vercel.</p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <ul>
+        <li><a href="https://example.com/project1" rel="noopener">Project One</a> — short description.</li>
+        <li><a href="https://example.com/project2" rel="noopener">Project Two</a> — short description.</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+
+      <!-- Replace the action URL with your Formspree endpoint or another form backend -->
+      <form id="contactForm" action="https://formspree.io/f/your-id" method="POST">
+        <label>
+          Name
+          <input type="text" name="name" required>
+        </label>
+
+        <label>
+          Email
+          <input type="email" name="_replyto" required>
+        </label>
+
+        <label>
+          Message
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+
+        <button type="submit">Send message</button>
+        <p class="form-note" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+
+  <footer class="container">
+    <small>© <span id="year"></span> Your Name — <a href="https://github.com/PrimalKudakwashe" rel="noopener">GitHub</a></small>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
