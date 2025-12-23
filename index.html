@@ -58,20 +58,21 @@
         <!-- If you use Formspree, set _next to the full URL for GitHub Pages or a relative path -->
         <input type="hidden" name="_next" value="https://PrimalKudakwashe.github.io/a1/thank-you.html">
 
-        <label>
+        <label for="name">
           Name
-          <input type="text" name="name" required>
         </label>
+        <input id="name" type="text" name="name" required>
 
-        <label>
+        <label for="email">
           Email
-          <input type="email" name="_replyto" required>
         </label>
+        <!-- Changed name to "email" and added id for clear mapping -->
+        <input id="email" type="email" name="email" required>
 
-        <label>
+        <label for="message">
           Message
-          <textarea name="message" rows="5" optional></textarea>
         </label>
+        <textarea id="message" name="message" rows="5"></textarea>
 
         <button type="submit">Send message</button>
         <p class="form-note" aria-live="polite"></p>
