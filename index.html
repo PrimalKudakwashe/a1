@@ -53,8 +53,11 @@
     <section id="contact">
       <h2>Contact</h2>
 
-      <!-- Replace the action URL with your Formspree endpoint or another form backend -->
-      <form id="contactForm" action="https://formspree.io/f/your-id" method="POST">
+      <!-- Formspree action remains; add the _next hidden field to redirect after successful submit -->
+      <form id="contactForm" action="https://formspree.io/f/mdanygkj" method="POST">
+        <!-- If you use Formspree, set _next to the full URL for GitHub Pages or a relative path -->
+        <input type="hidden" name="_next" value="https://PrimalKudakwashe.github.io/a1/thank-you.html">
+
         <label>
           Name
           <input type="text" name="name" required>
@@ -67,7 +70,7 @@
 
         <label>
           Message
-          <textarea name="message" rows="5" required></textarea>
+          <textarea name="message" rows="5" optional></textarea>
         </label>
 
         <button type="submit">Send message</button>
