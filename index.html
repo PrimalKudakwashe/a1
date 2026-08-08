@@ -1,93 +1,712 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="A minimal static site built with HTML and CSS — easy to edit and deploy.">
-  <title>My Simple Site</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winners Circle — Financial Mathematics Toolkit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
 
-  <link rel="icon" href="/favicon.ico">
+  :root{
+    --bg:        #0c0c16;
+    --bg-alt:    #101120;
+    --panel:     #161a2e;
+    --panel-2:   #1b2038;
+    --line:      rgba(255,255,255,0.08);
+    --coral:     #ef4a5f;
+    --coral-dim: rgba(239,74,95,0.16);
+    --gold:      #e8b84b;
+    --gold-dim:  rgba(232,184,75,0.14);
+    --text:      #eef0f6;
+    --muted:     #9096b3;
+    --muted-2:   #7d84a3;
+    --radius:    14px;
+  }
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
 
-  <link rel="stylesheet" href="styles.css" />
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+
+  a{ color:inherit; }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  ::selection{ background:var(--coral); color:#0c0c16; }
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    background:rgba(12,12,22,0.72);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease, background .3s ease;
+  }
+  header.nav.scrolled{
+    border-bottom-color:var(--line);
+  }
+  .nav-inner{
+    max-width:1120px;
+    margin:0 auto;
+    padding:16px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:0.02em;
+    text-decoration:none;
+  }
+  .brand svg{ display:block; }
+  .navlinks{
+    display:flex;
+    gap:32px;
+    font-size:14px;
+    color:var(--muted);
+  }
+  .navlinks a{
+    text-decoration:none;
+    transition:color .2s ease;
+  }
+  .navlinks a:hover{ color:var(--text); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:180px 0 120px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';
+    position:absolute;
+    top:-220px; left:50%;
+    transform:translateX(-50%);
+    width:900px; height:900px;
+    background:radial-gradient(circle, rgba(232,184,75,0.10) 0%, rgba(239,74,95,0.06) 38%, transparent 68%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:48px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 0 4px var(--gold-dim);
+  }
+  .hero h1{
+    font-size:clamp(40px, 6vw, 64px);
+    font-weight:700;
+    line-height:1.02;
+  }
+  .hero h1 .accent{
+    background:linear-gradient(96deg, var(--gold), var(--coral) 65%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p.lede{
+    margin-top:22px;
+    font-size:17px;
+    color:var(--muted);
+    max-width:46ch;
+  }
+  .hero-stats{
+    display:flex;
+    gap:28px;
+    margin-top:38px;
+    flex-wrap:wrap;
+  }
+  .stat{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .stat .n{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:26px;
+    font-weight:700;
+  }
+  .stat .l{
+    font-size:12px;
+    color:var(--muted-2);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+  }
+
+  /* ---------- signature ring ---------- */
+  .ring-wrap{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .ring-wrap svg{ width:100%; height:auto; max-width:440px; overflow:visible; }
+  .ring-track{
+    fill:none;
+    stroke:var(--line);
+    stroke-width:1.5;
+  }
+  .ring-progress{
+    fill:none;
+    stroke:url(#ringGrad);
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-dasharray:880;
+    stroke-dashoffset:880;
+    animation:draw 1.8s cubic-bezier(.4,0,.2,1) 0.3s forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+
+  .ring-center{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:13px;
+    fill:var(--muted);
+    text-anchor:middle;
+  }
+  .ring-center.big{
+    font-size:19px;
+    fill:var(--text);
+    font-weight:700;
+  }
+
+  .node{
+    cursor:pointer;
+    opacity:0;
+    animation:pop .5s ease forwards;
+  }
+  .node circle.dot{
+    fill:var(--bg);
+    stroke:var(--gold);
+    stroke-width:2;
+    transition:stroke .25s ease, fill .25s ease, r .25s ease;
+  }
+  .node:hover circle.dot, .node.active circle.dot{
+    fill:var(--gold);
+    stroke:var(--gold);
+  }
+  .node text{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    fill:var(--muted);
+    transition:fill .25s ease;
+  }
+  .node:hover text, .node.active text{ fill:var(--text); }
+
+  @keyframes pop{
+    from{ opacity:0; transform:scale(0.6); }
+    to{ opacity:1; transform:scale(1); }
+  }
+
+  /* ---------- section shell ---------- */
+  section{ padding:96px 0; }
+  section.alt{ background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+
+  .section-head{
+    max-width:640px;
+    margin-bottom:56px;
+  }
+  .section-head .eyebrow{ margin-bottom:14px; }
+  .section-head h2{
+    font-size:clamp(28px, 3.6vw, 38px);
+    font-weight:700;
+  }
+  .section-head p{
+    margin-top:14px;
+    color:var(--muted);
+    font-size:16px;
+  }
+
+  /* ---------- module cards ---------- */
+  .modules{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:20px;
+  }
+  .module-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px;
+    transition:border-color .25s ease, transform .25s ease, background .25s ease;
+    scroll-margin-top:100px;
+  }
+  .module-card:hover, .module-card.highlight{
+    border-color:var(--gold);
+    background:var(--panel-2);
+    transform:translateY(-3px);
+  }
+  .module-card .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--gold);
+    letter-spacing:0.06em;
+  }
+  .module-card h3{
+    font-size:19px;
+    margin-top:10px;
+    margin-bottom:10px;
+  }
+  .module-card p{
+    color:var(--muted);
+    font-size:14.5px;
+    margin:0;
+  }
+  .module-card .glyph{
+    width:38px; height:38px;
+    border-radius:10px;
+    background:var(--coral-dim);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:16px;
+  }
+  .module-card .glyph svg{ width:19px; height:19px; }
+
+  /* ---------- detail list ---------- */
+  .detail-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px 56px;
+  }
+  .detail-item{
+    display:flex;
+    gap:16px;
+  }
+  .detail-item .idx{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted-2);
+    padding-top:3px;
+    min-width:22px;
+  }
+  .detail-item h4{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:16px;
+    font-weight:600;
+    margin:0 0 6px;
+  }
+  .detail-item p{
+    margin:0;
+    color:var(--muted);
+    font-size:14.5px;
+  }
+  .detail-item code{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    padding:1px 6px;
+    border-radius:4px;
+    color:var(--text);
+  }
+
+  /* ---------- who it's for ---------- */
+  .forwho{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:56px;
+    align-items:start;
+  }
+  .forwho .pull{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:clamp(24px, 3vw, 30px);
+    line-height:1.3;
+    font-weight:600;
+  }
+  .forwho .pull .accent{ color:var(--gold); }
+  .forwho ul{
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .forwho li{
+    display:flex;
+    gap:14px;
+    color:var(--muted);
+    font-size:15px;
+  }
+  .forwho li::before{
+    content:'';
+    width:7px; height:7px;
+    margin-top:8px;
+    border-radius:50%;
+    background:var(--coral);
+    flex-shrink:0;
+  }
+  .forwho li b{ color:var(--text); font-weight:600; }
+
+  /* ---------- footer ---------- */
+  footer{
+    padding:56px 0 40px;
+    border-top:1px solid var(--line);
+  }
+  .footer-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .footer-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+  }
+  footer p.tagline{
+    color:var(--muted-2);
+    font-size:13.5px;
+    margin:0;
+  }
+  footer .fineprint{
+    color:var(--muted-2);
+    font-size:12.5px;
+    margin-top:24px;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .ring-wrap{ order:-1; max-width:280px; margin:0 auto 20px; }
+    .detail-grid{ grid-template-columns:1fr; }
+    .forwho{ grid-template-columns:1fr; }
+    .navlinks{ display:none; }
+  }
+</style>
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
 
-  <nav aria-label="Main navigation" class="container">
-    <ul class="nav" id="siteNav">
-      <li><a href="#home" data-target="home">Home</a></li>
-      <li><a href="#about" data-target="about">About</a></li>
-      <li><a href="#projects" data-target="projects">Projects</a></li>
-      <li><a href="#contact" data-target="contact">Contact</a></li>
-    </ul>
+<header class="nav" id="siteNav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <svg width="22" height="22" viewBox="0 0 22 22">
+        <circle cx="11" cy="11" r="9" fill="none" stroke="#e8b84b" stroke-width="1.6"/>
+        <circle cx="11" cy="2.4" r="1.6" fill="#ef4a5f"/>
+      </svg>
+      Winners Circle
+    </a>
+    <nav class="navlinks">
+      <a href="#toolkit">Toolkit</a>
+      <a href="#modules">Modules</a>
+      <a href="#details">How it works</a>
+      <a href="#forwho">Who it's for</a>
+    </nav>
+  </div>
+</header>
 
-    <!-- Dark mode toggle -->
-    <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">
-      🌙
-    </button>
-  </nav>
+<main id="top">
 
-  <header id="home" class="hero container">
-    <h1>Welcome to my simple website</h1>
-    <p class="tagline">A minimal static site — ready to publish. Built with accessibility, responsiveness, and simple interactivity in mind.</p>
-    <p><a class="cta" href="#about">Learn more</a></p>
-  </header>
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Financial Mathematics Toolkit</div>
+        <h1>Every calculation<br>has a place in the<br><span class="accent">Winners&nbsp;Circle.</span></h1>
+        <p class="lede">
+          Five calculator suites — investments, annuities, loans, retirement
+          growth, and rate conversion — built around one idea: get the exact
+          number, see exactly how you got there, and never fight the
+          interface to do it.
+        </p>
+        <div class="hero-stats">
+          <div class="stat"><span class="n mono">5</span><span class="l">Calculator suites</span></div>
+          <div class="stat"><span class="n mono">5</span><span class="l">Interest rate types</span></div>
+          <div class="stat"><span class="n mono">2</span><span class="l">Payment conventions</span></div>
+        </div>
+      </div>
 
-  <main id="main" class="container">
-    <section id="about">
-      <h2>About</h2>
-      <p>This page was built with plain HTML, CSS, and a tiny JavaScript enhancement file. Edit the content, add pages, and deploy to GitHub Pages, Netlify, or Vercel.</p>
-    </section>
+      <div class="ring-wrap">
+        <svg viewBox="0 0 300 300">
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#e8b84b"/>
+              <stop offset="100%" stop-color="#ef4a5f"/>
+            </linearGradient>
+          </defs>
 
-    <section id="projects">
-      <h2>Projects</h2>
-      <ul>
-        <li><a href="https://example.com/project1" rel="noopener">Project One</a> — short description.</li>
-        <li><a href="https://example.com/project2" rel="noopener">Project Two</a> — short description.</li>
+          <circle class="ring-track" cx="150" cy="150" r="120"/>
+          <circle class="ring-progress" cx="150" cy="150" r="120"
+                  transform="rotate(-90 150 150)"/>
+
+          <text x="150" y="145" class="ring-center big">Winners</text>
+          <text x="150" y="166" class="ring-center">Circle</text>
+
+          <!-- nodes placed at 72° intervals around the ring -->
+          <g class="node" data-target="m-invest" style="animation-delay:.9s" transform="translate(150,30)">
+            <circle class="dot" r="6"/>
+            <text y="-16" text-anchor="middle">INVEST</text>
+          </g>
+          <g class="node" data-target="m-annuity" style="animation-delay:1.05s" transform="translate(264,111)">
+            <circle class="dot" r="6"/>
+            <text x="18" y="4" text-anchor="start">ANNUITY</text>
+          </g>
+          <g class="node" data-target="m-loan" style="animation-delay:1.2s" transform="translate(221,251)">
+            <circle class="dot" r="6"/>
+            <text x="14" y="18" text-anchor="start">LOAN</text>
+          </g>
+          <g class="node" data-target="m-retire" style="animation-delay:1.35s" transform="translate(79,251)">
+            <circle class="dot" r="6"/>
+            <text x="-14" y="18" text-anchor="end">RETIRE</text>
+          </g>
+          <g class="node" data-target="m-convert" style="animation-delay:1.5s" transform="translate(36,111)">
+            <circle class="dot" r="6"/>
+            <text x="-18" y="4" text-anchor="end">CONVERT</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT IT IS ================= -->
+  <section id="toolkit" class="alt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">What it is</div>
+        <h2>A finance toolkit that shows its work.</h2>
+        <p>
+          Winners Circle bundles the calculations that come up constantly in
+          financial mathematics — compound growth, annuities, loan
+          amortisation, growing retirement contributions, and interest rate
+          conversion — into one desktop toolkit. Every result comes with a
+          full payment schedule and a chart, not just a single number, so
+          you can check the working, not only the answer.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MODULES ================= -->
+  <section id="modules">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">The Circle</div>
+        <h2>Five modules, one interface.</h2>
+        <p>Each one solves for whichever value you don't have — future value, present value, payment, term, or rate — from the ones you do.</p>
+      </div>
+
+      <div class="modules">
+
+        <div class="module-card reveal" id="m-invest">
+          <div class="glyph">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ef4a5f" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+          </div>
+          <div class="tag">MODULE 01</div>
+          <h3>Single Investment</h3>
+          <p>Grows a lump sum under simple, effective, nominal, or continuous (force of interest) compounding, and lays out a year-by-year balance table alongside it.</p>
+        </div>
+
+        <div class="module-card reveal" id="m-annuity">
+          <div class="glyph">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ef4a5f" stroke-width="1.8"><rect x="3" y="10" width="4" height="10"/><rect x="10" y="6" width="4" height="14"/><rect x="17" y="13" width="4" height="7"/></svg>
+          </div>
+          <div class="tag">MODULE 02</div>
+          <h3>Annuities</h3>
+          <p>Regular payment streams solved for future value, present value, payment size, term, or rate — in arrears or in advance, on the same set of controls.</p>
+        </div>
+
+        <div class="module-card reveal" id="m-loan">
+          <div class="glyph">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ef4a5f" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
+          </div>
+          <div class="tag">MODULE 03</div>
+          <h3>Loans</h3>
+          <p>Full amortisation schedules with a running balance, interest and capital split per instalment, and automatic handling of a final payment that doesn't quite match the rest.</p>
+        </div>
+
+        <div class="module-card reveal" id="m-retire">
+          <div class="glyph">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ef4a5f" stroke-width="1.8"><path d="M4 20c4-10 6-14 8-14s4 4 8 14"/><path d="M4 20h16"/></svg>
+          </div>
+          <div class="tag">MODULE 04</div>
+          <h3>Retirement Growth</h3>
+          <p>Contributions that step up over time — either every k-th period in grouped jumps, or with every single payment — for realistic retirement planning.</p>
+        </div>
+
+        <div class="module-card reveal" id="m-convert">
+          <div class="glyph">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#ef4a5f" stroke-width="1.8"><path d="M17 3l4 4-4 4"/><path d="M3 11V7h18"/><path d="M7 21l-4-4 4-4"/><path d="M21 13v4H3"/></svg>
+          </div>
+          <div class="tag">MODULE 05</div>
+          <h3>Rate Converter</h3>
+          <p>Moves freely between effective annual, effective periodic, nominal, simple, and continuous rates — the piece everything else quietly depends on.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DETAILS ================= -->
+  <section id="details" class="alt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">How it works</div>
+        <h2>Built around the details that usually trip people up.</h2>
+        <p>The kind of edge cases a textbook question tests for, handled by default rather than left for you to catch.</p>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-item reveal">
+          <span class="idx mono">01</span>
+          <div>
+            <h4>Rate compounding vs. payment frequency</h4>
+            <p>A rate that compounds monthly but pays out quarterly is treated as two separate settings, not one — so the conversion is done correctly instead of assumed.</p>
+          </div>
+        </div>
+        <div class="detail-item reveal">
+          <span class="idx mono">02</span>
+          <div>
+            <h4>Five interest rate types</h4>
+            <p>Effective annual, effective periodic, nominal, simple, and <code>force of interest (δ)</code> — every module accepts whichever one the question gives you.</p>
+          </div>
+        </div>
+        <div class="detail-item reveal">
+          <span class="idx mono">03</span>
+          <div>
+            <h4>Arrears and advance, side by side</h4>
+            <p>Annuities and loans both offer <code>ordinary</code> and <code>due</code> timing behind the same controls, so switching conventions doesn't mean switching tools.</p>
+          </div>
+        </div>
+        <div class="detail-item reveal">
+          <span class="idx mono">04</span>
+          <div>
+            <h4>Full schedules, not just totals</h4>
+            <p>Every calculation produces a complete period-by-period table and a matching chart — the working is always one click away from the answer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHO IT'S FOR ================= -->
+  <section id="forwho">
+    <div class="wrap forwho">
+      <div class="reveal">
+        <p class="pull">Built for anyone who needs the <span class="accent">right number</span>, and the steps that got there.</p>
+      </div>
+      <ul class="reveal">
+        <li><b>Students</b> working through annuities, loans, and investment growth problems who want to check their own working before handing it in.</li>
+        <li><b>Self-study</b> — anyone brushing up on financial mathematics who'd rather see a full schedule than trust a single output number.</li>
+        <li><b>Anyone planning ahead</b> — comparing loan terms, retirement contribution plans, or how a rate quoted one way behaves quoted another.</li>
       </ul>
-    </section>
+    </div>
+  </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
+</main>
 
-      <!-- Formspree action remains; add the _next hidden field to redirect after successful submit -->
-      <form id="contactForm" action="https://formspree.io/f/mdanygkj" method="POST">
-        <!-- If you use Formspree, set _next to the full URL for GitHub Pages or a relative path -->
-        <input type="hidden" name="_next" value="https://PrimalKudakwashe.github.io/a1/thank-you.html">
-
-        <label for="name">
-          Name
-        </label>
-        <input id="name" type="text" name="name" required>
-
-        <label for="email">
-          Email
-        </label>
-        <!-- Changed name to "email" and added id for clear mapping -->
-        <input id="email" type="email" name="email" required>
-
-        <label for="message">
-          Message
-        </label>
-        <textarea id="message" name="message" rows="5"></textarea>
-
-        <button type="submit">Send message</button>
-        <p class="form-note" aria-live="polite"></p>
-      </form>
-    </section>
-  </main>
-
-  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
-
-  <footer class="container">
-  <small>© <span id="year"></span> Your Name — 
-    <a href="https://github.com/PrimalKudakwashe"></a>
-  </small>
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <svg width="18" height="18" viewBox="0 0 22 22">
+        <circle cx="11" cy="11" r="9" fill="none" stroke="#e8b84b" stroke-width="1.6"/>
+        <circle cx="11" cy="2.4" r="1.6" fill="#ef4a5f"/>
+      </svg>
+      Winners Circle
+    </div>
+    <p class="tagline">A financial mathematics toolkit — investments, annuities, loans, retirement, and rate conversion.</p>
+  </div>
+  <div class="wrap">
+    <p class="fineprint">This page is informational only.</p>
+  </div>
 </footer>
 
-  <script src="js/main.js" defer></script>
+<script>
+  // nav shadow on scroll
+  const nav = document.getElementById('siteNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive:true });
+
+  // scroll-reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold:0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // ring nodes -> highlight + scroll to matching module card
+  document.querySelectorAll('.node').forEach(node => {
+    const targetId = node.getAttribute('data-target');
+    const card = document.getElementById(targetId);
+    if (!card) return;
+
+    node.addEventListener('click', () => {
+      card.scrollIntoView({ behavior:'smooth', block:'center' });
+      card.classList.add('highlight');
+      setTimeout(() => card.classList.remove('highlight'), 1600);
+    });
+
+    node.addEventListener('mouseenter', () => node.classList.add('active'));
+    node.addEventListener('mouseleave', () => node.classList.remove('active'));
+  });
+</script>
+
 </body>
 </html>
